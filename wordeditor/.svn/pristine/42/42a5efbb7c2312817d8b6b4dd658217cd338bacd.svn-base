@@ -1,0 +1,27 @@
+<?php
+require_once 'Lexer.php';
+if(!isset($_POST['html'])){  
+    exit('非法访问!');  
+}  
+$html=$_POST['html'];
+$fp=fopen("htmls/tmp.html","w");
+$flag=fwrite($fp,$html);
+if(!$flag){
+	echo "<response><result>error</result></response>";
+}
+fclose($fp);
+$lexer=new Lexer('htmls/tmp.html');
+//echo('start!!!');
+$lexer->scan();
+//while(!$lexer->isEnd()){
+//	echo('paragraph:');
+//	$lexer->scan();
+//}
+//$lexer->closeFile();
+//$lexer->autoScan();
+//$lexer->printParagraphs();
+$lexer->generateWord();
+
+echo "<response><result>docxs/lexerTest.docx</result></response>";
+
+?>
